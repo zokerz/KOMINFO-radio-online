@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>eRKS FM Sumedang 106.1 - Inspirasi Sumedang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="brand">
+      <img src="/logo.svg" alt="Logo eRKS FM Sumedang" class="logo" />
+      <div>
+        <p class="kicker">LPPL Kabupaten Sumedang</p>
+        <h1>eRKS FM Sumedang</h1>
+      </div>
+    </div>
+    <nav class="menu">
+      <a href="#home">Beranda</a>
+      <a href="#programs">Program</a>
+      <a href="#schedule">Jadwal</a>
+      <a href="#news">Berita</a>
+      <a href="#about">Tentang</a>
+    </nav>
+    <a href="#live-player" class="btn-primary">Dengarkan Sekarang</a>
+  </header>
+
+  <main>
+    <section id="home" class="hero section card">
+      <div class="hero-copy">
+        <p class="badge">Radio Publik Lokal • 106.1 FM</p>
+        <h2>eRKS FM 106.1 - Inspirasi Sumedang</h2>
+        <p>
+          Sumber informasi publik, edukasi, dan hiburan terpercaya untuk masyarakat Kabupaten Sumedang.
+        </p>
+        <div class="hero-actions">
+          <button id="heroPlay" class="btn-primary">Putar Siaran</button>
+          <a href="#about" class="btn-secondary">Tentang Kami</a>
+        </div>
+      </div>
+      <div class="hero-wave card-soft" aria-hidden="true">
+        <p class="label">Gelombang Siaran</p>
+        <div class="wave-grid">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="live-player" class="section">
+      <div class="section-head">
+        <h3>Live Radio Player</h3>
+      </div>
+      <article class="player-main card">
+        <div>
+          <p class="label">Station</p>
+          <h4 id="stationName">eRKS FM Sumedang</h4>
+          <p class="freq">106.1 FM</p>
+          <p id="programTitle">Program Pagi Sumedang</p>
+          <p id="announcerName">Penyiar: Tim eRKS FM</p>
+        </div>
+        <div class="player-controls">
+          <button id="cardPlay" class="btn-primary">Play</button>
+          <p id="statusText">Siap diputar</p>
+          <label for="volumeControl">Volume</label>
+          <input id="volumeControl" type="range" min="0" max="1" step="0.01" value="0.8" />
+          <div class="equalizer paused" id="mainEq" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section id="programs" class="section">
+      <div class="section-head">
+        <h3>Program Hari Ini</h3>
+      </div>
+      <div class="grid cards-3">
+        <article class="card program-card onair">
+          <span class="onair-badge">On Air</span>
+          <h4>Selamat Pagi Sumedang</h4>
+          <p>06:00 - 09:00</p>
+          <p>Penyiar: Rani Fitria</p>
+        </article>
+        <article class="card program-card">
+          <h4>Ruang Publik Daerah</h4>
+          <p>09:00 - 12:00</p>
+          <p>Penyiar: Deni Pratama</p>
+        </article>
+        <article class="card program-card">
+          <h4>Musik Sore Priangan</h4>
+          <p>15:00 - 18:00</p>
+          <p>Penyiar: Siska Nuraini</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="schedule" class="section">
+      <div class="section-head">
+        <h3>Jadwal Siaran Mingguan</h3>
+      </div>
+      <div class="card">
+        <div class="tabs" id="scheduleTabs">
+          <button class="tab active" data-day="senin">Senin</button>
+          <button class="tab" data-day="selasa">Selasa</button>
+          <button class="tab" data-day="rabu">Rabu</button>
+          <button class="tab" data-day="kamis">Kamis</button>
+          <button class="tab" data-day="jumat">Jumat</button>
+        </div>
+        <div id="scheduleList" class="timeline"></div>
+      </div>
+    </section>
+
+    <section id="news" class="section">
+      <div class="section-head">
+        <h3>Berita Terbaru</h3>
+      </div>
+      <div class="grid cards-3">
+        <article class="card news-card">
+          <p class="meta">31 Mei 2026</p>
+          <h4>LPPL Sumedang Perkuat Informasi Kebencanaan</h4>
+          <p>eRKS FM memperluas slot informasi siaga bencana setiap jam.</p>
+        </article>
+        <article class="card news-card">
+          <p class="meta">29 Mei 2026</p>
+          <h4>Kolaborasi UMKM Lokal Hadir di Program Sore</h4>
+          <p>Pelaku usaha Sumedang kini mendapat panggung promosi rutin.</p>
+        </article>
+        <article class="card news-card">
+          <p class="meta">27 Mei 2026</p>
+          <h4>Pelatihan Penyiar Muda Dibuka untuk Pelajar</h4>
+          <p>Program edukatif untuk mencetak talenta penyiar lokal baru.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="announcers" class="section">
+      <div class="section-head">
+        <h3>Profil Penyiar</h3>
+      </div>
+      <div class="grid cards-3">
+        <article class="card profile-card"><h4>Rani Fitria</h4><p>Host berita pagi dan inspirasi komunitas.</p></article>
+        <article class="card profile-card"><h4>Deni Pratama</h4><p>Pemandu dialog publik dan layanan masyarakat.</p></article>
+        <article class="card profile-card"><h4>Siska Nuraini</h4><p>Kurator musik lokal dan interaksi pendengar.</p></article>
+      </div>
+    </section>
+
+    <section id="gallery" class="section">
+      <div class="section-head">
+        <h3>Galeri & Video</h3>
+      </div>
+      <div class="grid cards-3">
+        <article class="card media-card"><h4>Studio Siaran Utama</h4><p>Dokumentasi fasilitas studio eRKS FM.</p></article>
+        <article class="card media-card"><h4>Kegiatan Komunitas</h4><p>Interaksi penyiar dan warga Kabupaten Sumedang.</p></article>
+        <article class="card media-card"><h4>Video Highlight Mingguan</h4><p>Rekaman momen program unggulan pekan ini.</p></article>
+      </div>
+    </section>
+
+    <section id="about" class="section card about">
+      <div>
+        <h3>Tentang eRKS FM</h3>
+        <p>
+          eRKS FM Sumedang 106.1 adalah radio publik lokal (LPPL) Kabupaten Sumedang yang menghadirkan informasi pemerintah daerah,
+          pendidikan, budaya, serta hiburan berkualitas untuk masyarakat.
+        </p>
+      </div>
+      <ul>
+        <li>Informatif dan terpercaya</li>
+        <li>Mendukung budaya lokal Sumedang</li>
+        <li>Partisipatif untuk komunitas</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>
+      <h4>eRKS FM Sumedang</h4>
+      <p>Jl. Prabu Geusan Ulun No. 1, Sumedang</p>
+      <p>WhatsApp: +62 812-3456-1061</p>
+    </div>
+    <div>
+      <h4>Tautan Cepat</h4>
+      <a href="#home">Beranda</a>
+      <a href="#programs">Program</a>
+      <a href="#news">Berita</a>
+    </div>
+    <div>
+      <h4>Media Sosial</h4>
+      <a href="#">Instagram</a>
+      <a href="#">YouTube</a>
+      <a href="#">Facebook</a>
+    </div>
+  </footer>
+
+  <div class="sticky-player" id="stickyPlayer">
+    <div class="sticky-left">
+      <button id="playPauseBtn" class="btn-primary" aria-label="Play or pause">Play</button>
+      <div>
+        <p class="label">Now Playing</p>
+        <h4 id="stickyStation">eRKS FM Sumedang</h4>
+        <p id="stickyProgram">Program Pagi Sumedang</p>
+      </div>
+    </div>
+    <div class="equalizer paused" id="stickyEq" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <audio id="radioAudio" preload="none"></audio>
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

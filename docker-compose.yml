@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  icecast:
+    build: .
+    container_name: icecast2
+    ports:
+      - "8099:8000"
+    restart: unless-stopped
+    volumes:
+      - ./icecast.xml:/etc/icecast2/icecast.xml:ro
+
+  public-ui:
+    build: ./icecast-public-ui
+    image: icecast-public-ui
+    ports:
+      - "3000:3000"
+    environment:
+      - ICECAST_URL=http://icecast:8000/status-json.xsl
+    depends_on:
+      - icecast
+    restart: unless-stopped

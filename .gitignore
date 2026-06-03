@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+icecast-public-ui/node_modules/
+
+# Environment and local configuration
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime and cache files
+.cache/
+.tmp/
+tmp/
+coverage/
+dist/
+build/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Docker/local generated data
+docker-data/
+*.pid
+
+# Audio test artifacts
+*.mp3
+*.wav
+*.ogg
+*.aac
+*.flac
