@@ -127,7 +127,7 @@ app.get('/stream-proxy', async (req, res) => {
   if (!target) return res.status(400).send('Missing url');
   try {
     const internal = toInternalIcecastUrl(target);
-    const r = await axios.get(internal, { responseType: 'stream', timeout: 10000 });
+    const r = await axios.get(internal, { responseType: 'stream', timeout: 0 });
     // Copy important headers
     const ct = r.headers['content-type'] || 'application/octet-stream';
     res.setHeader('Content-Type', ct);
@@ -136,6 +136,9 @@ app.get('/stream-proxy', async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     // Pipe stream
     r.data.pipe(res);
+    req.on('close', () => {
+      r.data.destroy();
+    });
     r.data.on('end', () => res.end());
     r.data.on('error', () => res.end());
   } catch (e) {
