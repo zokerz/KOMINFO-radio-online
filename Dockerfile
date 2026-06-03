@@ -9,7 +9,8 @@ RUN apt-get update \
 RUN useradd --system --home /var/log/icecast2 --create-home --uid 10001 --gid icecast icecast \
     && chown -R icecast:icecast /var/log/icecast2 /etc/icecast2 /usr/share/icecast2
 
-COPY icecast.xml /etc/icecast2/icecast.xml
+COPY --chown=icecast:icecast icecast.xml /etc/icecast2/icecast.xml
+RUN chmod 0644 /etc/icecast2/icecast.xml
 
 USER icecast
 
