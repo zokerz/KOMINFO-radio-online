@@ -15,6 +15,16 @@ const cardPlayIcon = document.getElementById('cardPlayIcon');
 const miniPlayIcon = document.getElementById('miniPlayIcon');
 const equalizers = document.querySelectorAll('.equalizer');
 const scheduleList = document.getElementById('scheduleList');
+const programList = document.getElementById('programList');
+const programEmpty = document.getElementById('programEmpty');
+const scheduleItems = document.getElementById('scheduleItems');
+const scheduleEmpty = document.getElementById('scheduleEmpty');
+const newsList = document.getElementById('newsList');
+const newsEmpty = document.getElementById('newsEmpty');
+const announcerList = document.getElementById('announcerList');
+const announcerEmpty = document.getElementById('announcerEmpty');
+const galleryList = document.getElementById('galleryList');
+const galleryEmpty = document.getElementById('galleryEmpty');
 
 let activeStreamUrl = null;
 let hlsInstance = null;
@@ -46,6 +56,26 @@ async function fetchMounts() {
   const res = await fetch('/api/mounts');
   if (!res.ok) throw new Error('Gagal mengambil data stream');
   return res.json();
+}
+
+async function fetchSiteContent() {
+  const res = await fetch('/api/site-content');
+  if (!res.ok) throw new Error('Gagal mengambil konten website');
+  return res.json();
+}
+
+function escapeHtml(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function setEmptyState(listEl, emptyEl, hasItems) {
+  listEl.hidden = !hasItems;
+  emptyEl.hidden = hasItems;
 }
 
 function updateNowPlaying(data) {
@@ -147,6 +177,62 @@ function renderScheduleEmptyState() {
   `;
 }
 
+function renderSiteContent(data) {
+  const programs = data.programs || [];
+  setEmptyState(programList, programEmpty, programs.length > 0);
+  programList.innerHTML = programs.map((item) => `
+    <article class="site-card">
+      ${item.onAir ? '<span class="on-air-badge">On Air</span>' : ''}
+      <p class="meta">${escapeHtml(item.time || 'Waktu belum diatur')}</p>
+      <h3>${escapeHtml(item.title)}</h3>
+      <p>${escapeHtml(item.announcer ? `Penyiar: ${item.announcer}` : 'Penyiar belum tersedia')}</p>
+      <p>${escapeHtml(item.description)}</p>
+    </article>
+  `).join('');
+
+  const schedules = data.schedules || [];
+  setEmptyState(scheduleItems, scheduleEmpty, schedules.length > 0);
+  scheduleItems.innerHTML = schedules.map((item) => `
+    <article class="site-card">
+      <p class="meta">${escapeHtml(item.day || 'Hari belum diatur')} • ${escapeHtml(item.time || 'Jam belum diatur')}</p>
+      <h3>${escapeHtml(item.title)}</h3>
+      <p>${escapeHtml(item.announcer ? `Penyiar: ${item.announcer}` : 'Penyiar belum tersedia')}</p>
+    </article>
+  `).join('');
+
+  const news = data.news || [];
+  setEmptyState(newsList, newsEmpty, news.length > 0);
+  newsList.innerHTML = news.map((item) => `
+    <article class="site-card">
+      <p class="meta">${escapeHtml(item.date || 'Tanggal belum diatur')}</p>
+      <h3>${escapeHtml(item.title)}</h3>
+      <p>${escapeHtml(item.excerpt)}</p>
+      ${item.url ? `<a href="${escapeHtml(item.url)}" target="_blank" rel="noopener">Baca selengkapnya</a>` : ''}
+    </article>
+  `).join('');
+
+  const announcers = data.announcers || [];
+  setEmptyState(announcerList, announcerEmpty, announcers.length > 0);
+  announcerList.innerHTML = announcers.map((item) => `
+    <article class="site-card">
+      <p class="meta">${escapeHtml(item.role || 'Penyiar')}</p>
+      <h3>${escapeHtml(item.name)}</h3>
+      <p>${escapeHtml(item.bio)}</p>
+    </article>
+  `).join('');
+
+  const galleries = data.galleries || [];
+  setEmptyState(galleryList, galleryEmpty, galleries.length > 0);
+  galleryList.innerHTML = galleries.map((item) => `
+    <article class="site-card">
+      <p class="meta">${escapeHtml(item.type === 'video' ? 'Video' : 'Foto')}</p>
+      <h3>${escapeHtml(item.title)}</h3>
+      <p>${escapeHtml(item.description)}</p>
+      ${item.mediaUrl ? `<a href="${escapeHtml(item.mediaUrl)}" target="_blank" rel="noopener">Lihat media</a>` : ''}
+    </article>
+  `).join('');
+}
+
 function bindEvents() {
   heroPlay.addEventListener('click', togglePlayback);
   cardPlay.addEventListener('click', togglePlayback);
@@ -180,6 +266,13 @@ async function init() {
     statusText.textContent = 'Tidak bisa memuat info stream';
     statusEyebrow.textContent = 'Koneksi stream bermasalah';
     statusIndicator.className = 'status-dot error';
+  }
+
+  try {
+    const content = await fetchSiteContent();
+    renderSiteContent(content);
+  } catch (err) {
+    console.warn(err);
   }
 }
 

@@ -29,6 +29,10 @@ Thumbs.db
 
 # Docker/local generated data
 docker-data/
+data/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
 *.pid
 
 # Audio test artifacts

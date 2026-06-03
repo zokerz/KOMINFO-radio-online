@@ -313,6 +313,53 @@ input[type="range"] { width: 100%; accent-color: var(--secondary); }
 }
 .empty-card p, #scheduleList p { margin: 0; font-size: 1.05rem; }
 .tall { min-height: 25rem; }
+.content-grid, .schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+.stack-list {
+  display: grid;
+  gap: 1rem;
+}
+.site-card {
+  min-height: 100%;
+  padding: 1.1rem;
+  border: 1px solid rgba(198, 198, 205, 0.65);
+  border-radius: 1rem;
+  background: var(--surface);
+  box-shadow: 0 8px 26px rgba(25, 28, 30, 0.05);
+}
+.site-card h3 {
+  margin: 0.2rem 0 0.4rem;
+  font-family: "Plus Jakarta Sans", Inter, sans-serif;
+}
+.site-card p {
+  margin: 0.25rem 0;
+  color: var(--muted);
+}
+.site-card a {
+  display: inline-flex;
+  margin-top: 0.65rem;
+  color: var(--secondary);
+  font-weight: 800;
+  text-decoration: none;
+}
+.site-card .meta {
+  color: var(--secondary);
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+.on-air-badge {
+  display: inline-flex;
+  width: fit-content;
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  background: #ba1a1a;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
 .split-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -458,6 +505,9 @@ input[type="range"] { width: 100%; accent-color: var(--secondary); }
   .player-panel, .about-panel, .split-grid, .footer-grid {
     grid-template-columns: 1fr;
   }
+  .content-grid, .schedule-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .studio-art { max-width: 260px; width: 100%; margin: 0 auto; }
 }
 
@@ -474,6 +524,7 @@ input[type="range"] { width: 100%; accent-color: var(--secondary); }
   .player-heading { align-items: flex-start; flex-direction: column; }
   .round-play { width: 3.5rem; height: 3.5rem; }
   .value-grid { grid-template-columns: 1fr; }
+  .content-grid, .schedule-grid { grid-template-columns: 1fr; }
   .mini-player { align-items: flex-start; flex-direction: column; gap: 0.55rem; }
   .mini-player .equalizer { min-height: 1rem; }
 }

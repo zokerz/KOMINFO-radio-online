@@ -92,7 +92,8 @@
     <section id="programs" class="content-section">
       <div class="container">
         <h2>Program Hari Ini</h2>
-        <div class="empty-card">
+        <div id="programList" class="content-grid"></div>
+        <div id="programEmpty" class="empty-card">
           <span class="material-symbols-outlined" aria-hidden="true">calendar_today</span>
           <p>Belum ada data program</p>
         </div>
@@ -102,7 +103,8 @@
     <section id="schedule" class="content-section section-soft">
       <div class="container">
         <h2>Jadwal Siaran</h2>
-        <div class="empty-card empty-card-light">
+        <div id="scheduleItems" class="schedule-grid"></div>
+        <div id="scheduleEmpty" class="empty-card empty-card-light">
           <span class="material-symbols-outlined" aria-hidden="true">schedule</span>
           <div id="scheduleList"></div>
         </div>
@@ -113,14 +115,16 @@
       <div class="container split-grid">
         <div>
           <h2>Berita Terbaru</h2>
-          <div class="empty-card tall">
+          <div id="newsList" class="stack-list"></div>
+          <div id="newsEmpty" class="empty-card tall">
             <span class="material-symbols-outlined" aria-hidden="true">newspaper</span>
             <p>Belum ada berita</p>
           </div>
         </div>
         <div id="announcers">
           <h2>Profil Penyiar</h2>
-          <div class="empty-card tall">
+          <div id="announcerList" class="stack-list"></div>
+          <div id="announcerEmpty" class="empty-card tall">
             <span class="material-symbols-outlined" aria-hidden="true">mic_external_on</span>
             <p>Belum ada profil penyiar</p>
           </div>
@@ -131,7 +135,8 @@
     <section id="gallery" class="content-section section-soft">
       <div class="container">
         <h2>Galeri &amp; Video</h2>
-        <div class="empty-card empty-card-light">
+        <div id="galleryList" class="content-grid"></div>
+        <div id="galleryEmpty" class="empty-card empty-card-light">
           <span class="material-symbols-outlined" aria-hidden="true">photo_library</span>
           <p>Belum ada galeri</p>
         </div>

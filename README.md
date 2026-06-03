@@ -9,6 +9,7 @@ Website radio online modern untuk **eRKS FM Sumedang 106.1 FM - Inspirasi Sumeda
 - Live player dengan play/pause, volume control, metadata siaran, dan equalizer animasi
 - Proxy stream audio agar lebih mudah diputar browser
 - API status dan mount Icecast untuk frontend
+- CMS admin untuk mengatur daftar media automation dan konten website
 - Desain responsive untuk desktop dan mobile
 
 ## Arsitektur Singkat
@@ -72,6 +73,8 @@ docker compose down
 - `GET /api/mounts` untuk daftar mount yang dipakai frontend
 - `GET /api/resolve?url=<stream_url>` untuk resolve playlist stream
 - `GET /stream-proxy?url=<stream_url>` untuk proxy audio stream
+- `GET /api/automation-media` untuk daftar media automation yang sedang aktif
+- `GET /api/site-content` untuk konten website seperti program, jadwal, berita, penyiar, dan galeri
 
 ## Konfigurasi Penting
 
@@ -81,7 +84,12 @@ Environment yang dipakai service `public-ui`:
 
 ```bash
 ICECAST_URL=http://icecast:8000/status-json.xsl
+ICECAST_BASE=http://icecast:8000
 ICECAST_PUBLIC_BASE=http://localhost:8099
+DATA_DIR=/app/data
+CMS_ADMIN_USER=admin
+CMS_ADMIN_PASSWORD_HASH=<salt:hash>
+SESSION_SECRET=<random-secret>
 ```
 
 Jika Icecast diakses lewat Nginx Proxy Manager atau domain publik, set `ICECAST_PUBLIC_BASE` ke URL publik stream, contoh:
@@ -89,6 +97,61 @@ Jika Icecast diakses lewat Nginx Proxy Manager atau domain publik, set `ICECAST_
 ```bash
 ICECAST_PUBLIC_BASE=https://stream.domain.go.id
 ```
+
+## CMS Automation Media
+
+CMS dapat diakses melalui:
+
+```text
+http://localhost:3000/admin
+```
+
+Untuk membuat password hash admin:
+
+```bash
+cd icecast-public-ui
+npm run hash-password -- "password-kuat"
+```
+
+Masukkan output hash ke environment:
+
+```bash
+CMS_ADMIN_USER=admin
+CMS_ADMIN_PASSWORD_HASH=<output-hash>
+SESSION_SECRET=<random-secret-panjang>
+```
+
+Data CMS disimpan di SQLite:
+
+```text
+data/erks-cms.sqlite
+```
+
+Database ini berada di volume Docker `./data:/app/data`, sehingga data CMS tetap aman saat container `public-ui` di-recreate.
+
+Metode play yang tersedia di CMS:
+
+- `Berdasarkan Jam`: media aktif pada hari/jam tertentu.
+- `Queue / Antrean`: media dipilih berdasarkan urutan queue.
+- `Prioritas`: media dengan nilai prioritas tertinggi dipilih lebih dulu.
+- `Loop`: media masuk daftar loop untuk diputar berulang oleh engine automation.
+
+Endpoint publik untuk sistem automation:
+
+```text
+GET /api/automation-media
+GET /api/automation-media/next
+```
+
+`/api/automation-media` mengembalikan `items`, `groups`, dan `nextItem`. Urutan pemilihan `nextItem` adalah `schedule`, lalu `queue`, lalu `priority`, lalu `loop`.
+
+CMS juga dapat mengisi section website berikut:
+
+- Program Hari Ini
+- Jadwal Siaran
+- Berita Terbaru
+- Profil Penyiar
+- Galeri & Video
 
 ## Dokumentasi Alur
 

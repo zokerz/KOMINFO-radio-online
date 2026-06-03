@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "hash-password": "node scripts/hash-password.js"
   },
   "dependencies": {
     "express": "^4.18.2",

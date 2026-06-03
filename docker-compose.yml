@@ -15,6 +15,13 @@ services:
       - ICECAST_URL=http://icecast:8000/status-json.xsl
       - ICECAST_BASE=http://icecast:8000
       - ICECAST_PUBLIC_BASE=${ICECAST_PUBLIC_BASE:-http://localhost:8099}
+      - DATA_DIR=/app/data
+      - DB_FILE=/app/data/erks-cms.sqlite
+      - CMS_ADMIN_USER=${CMS_ADMIN_USER:-admin}
+      - CMS_ADMIN_PASSWORD_HASH=${CMS_ADMIN_PASSWORD_HASH:-}
+      - SESSION_SECRET=${SESSION_SECRET:-}
+    volumes:
+      - ./data:/app/data
     depends_on:
       - icecast
     restart: unless-stopped
