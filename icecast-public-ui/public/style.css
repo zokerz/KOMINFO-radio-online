@@ -233,6 +233,17 @@ button:focus-visible, a:focus-visible, input:focus-visible {
   margin: 0.4rem 0 0;
   color: var(--muted);
 }
+.listener-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.65rem 0 0;
+  color: var(--secondary);
+  font-weight: 800;
+}
+.listener-count .material-symbols-outlined {
+  font-size: 1.2rem;
+}
 .player-controls {
   display: flex;
   align-items: center;
@@ -458,6 +469,11 @@ input[type="range"] { width: 100%; accent-color: var(--secondary); }
   white-space: nowrap;
 }
 .mini-copy span { color: var(--muted); }
+#stickyListeners {
+  color: var(--secondary);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
 
 .equalizer {
   display: flex;

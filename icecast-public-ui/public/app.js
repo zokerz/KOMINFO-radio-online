@@ -13,6 +13,8 @@ const statusEyebrow = document.getElementById('statusEyebrow');
 const statusIndicator = document.getElementById('statusIndicator');
 const cardPlayIcon = document.getElementById('cardPlayIcon');
 const miniPlayIcon = document.getElementById('miniPlayIcon');
+const listenerCount = document.getElementById('listenerCount');
+const stickyListeners = document.getElementById('stickyListeners');
 const equalizers = document.querySelectorAll('.equalizer');
 const scheduleList = document.getElementById('scheduleList');
 const programList = document.getElementById('programList');
@@ -30,6 +32,13 @@ let activeStreamUrl = null;
 let hlsInstance = null;
 let isPlaying = false;
 let isStopping = false;
+
+function setListenerCount(count = 0) {
+  const value = Number(count) || 0;
+  const text = `${value} pendengar`;
+  listenerCount.textContent = text;
+  stickyListeners.textContent = text;
+}
 
 function setPlaybackEnabled(enabled) {
   heroPlay.disabled = !enabled;
@@ -90,6 +99,7 @@ function updateNowPlaying(data) {
     statusText.textContent = 'Tidak ada siaran aktif';
     statusEyebrow.textContent = 'Tidak ada siaran aktif';
     statusIndicator.className = 'status-dot error';
+    setListenerCount(0);
     setPlaybackEnabled(false);
     return;
   }
@@ -104,6 +114,7 @@ function updateNowPlaying(data) {
 
   announcerName.textContent = 'Penyiar: Belum tersedia';
   activeStreamUrl = first.listenurl || null;
+  setListenerCount(first.listeners);
   setPlaybackEnabled(Boolean(activeStreamUrl));
 }
 
@@ -267,6 +278,15 @@ async function init() {
     statusEyebrow.textContent = 'Koneksi stream bermasalah';
     statusIndicator.className = 'status-dot error';
   }
+
+  setInterval(async () => {
+    try {
+      const data = await fetchMounts();
+      updateNowPlaying(data);
+    } catch (err) {
+      console.warn(err);
+    }
+  }, 10000);
 
   try {
     const content = await fetchSiteContent();
