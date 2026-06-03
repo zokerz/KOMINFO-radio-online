@@ -13,6 +13,8 @@ services:
       - "3000:3000"
     environment:
       - ICECAST_URL=http://icecast:8000/status-json.xsl
+      - ICECAST_BASE=http://icecast:8000
+      - ICECAST_PUBLIC_BASE=${ICECAST_PUBLIC_BASE:-http://localhost:8099}
     depends_on:
       - icecast
     restart: unless-stopped

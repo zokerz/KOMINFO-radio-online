@@ -81,6 +81,13 @@ Environment yang dipakai service `public-ui`:
 
 ```bash
 ICECAST_URL=http://icecast:8000/status-json.xsl
+ICECAST_PUBLIC_BASE=http://localhost:8099
+```
+
+Jika Icecast diakses lewat Nginx Proxy Manager atau domain publik, set `ICECAST_PUBLIC_BASE` ke URL publik stream, contoh:
+
+```bash
+ICECAST_PUBLIC_BASE=https://stream.domain.go.id
 ```
 
 ## Dokumentasi Alur
