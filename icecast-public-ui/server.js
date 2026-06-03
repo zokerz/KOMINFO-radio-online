@@ -9,7 +9,12 @@ const PUBLIC_BASE = process.env.ICECAST_PUBLIC_BASE || STREAM_BASE;
 
 const app = express();
 app.use(cors());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {
+  maxAge: 0,
+  setHeaders: (res) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  }
+}));
 
 function replaceOrigin(target, base) {
   const targetUrl = new URL(target);

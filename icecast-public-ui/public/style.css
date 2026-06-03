@@ -88,6 +88,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
   cursor: pointer;
   text-decoration: none;
   font-weight: 800;
+  white-space: nowrap;
   transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
 }
 .listen-now, .primary-action {
@@ -463,7 +464,8 @@ input[type="range"] { width: 100%; accent-color: var(--secondary); }
 @media (max-width: 640px) {
   body { padding-bottom: 9rem; }
   .topbar { height: auto; min-height: 4rem; padding-block: 0.65rem; }
-  .brand span:last-child { max-width: 44vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .brand { min-width: 0; }
+  .brand span:last-child { max-width: 48vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .listen-now { padding-inline: 0.85rem; font-size: 0.86rem; }
   .listen-now .material-symbols-outlined { display: none; }
   .hero { padding-top: 7.3rem; text-align: left; }
@@ -472,5 +474,6 @@ input[type="range"] { width: 100%; accent-color: var(--secondary); }
   .player-heading { align-items: flex-start; flex-direction: column; }
   .round-play { width: 3.5rem; height: 3.5rem; }
   .value-grid { grid-template-columns: 1fr; }
-  .mini-player { align-items: flex-start; flex-direction: column; }
+  .mini-player { align-items: flex-start; flex-direction: column; gap: 0.55rem; }
+  .mini-player .equalizer { min-height: 1rem; }
 }
