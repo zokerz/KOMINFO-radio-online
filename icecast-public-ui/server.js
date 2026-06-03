@@ -38,6 +38,15 @@ function toInternalIcecastUrl(target) {
   }
 }
 
+function isPlaylistUrl(target) {
+  try {
+    const pathname = new URL(target, STREAM_BASE).pathname.toLowerCase();
+    return pathname.endsWith('.m3u') || pathname.endsWith('.m3u8') || pathname.endsWith('.xspf');
+  } catch (e) {
+    return false;
+  }
+}
+
 app.get('/api/status', async (req, res) => {
   try {
     const r = await axios.get(ICECAST_URL, { timeout: 5000 });
@@ -88,6 +97,8 @@ app.get('/api/mounts', async (req, res) => {
 app.get('/api/resolve', async (req, res) => {
   const url = req.query.url;
   if (!url) return res.status(400).json({ error: 'Missing url parameter' });
+  if (!isPlaylistUrl(url)) return res.json({ url });
+
   try {
     const internalUrl = toInternalIcecastUrl(url);
     const r = await axios.get(internalUrl, { timeout: 5000, responseType: 'text' });
