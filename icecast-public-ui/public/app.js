@@ -11,39 +11,10 @@ const announcerName = document.getElementById('announcerName');
 const statusText = document.getElementById('statusText');
 const equalizers = document.querySelectorAll('.equalizer');
 const scheduleList = document.getElementById('scheduleList');
-const scheduleTabs = document.querySelectorAll('.tab');
 
 let activeStreamUrl = null;
 let hlsInstance = null;
 let isPlaying = false;
-
-const scheduleData = {
-  senin: [
-    { time: '06:00', title: 'Selamat Pagi Sumedang', host: 'Rani Fitria' },
-    { time: '09:00', title: 'Ruang Publik Daerah', host: 'Deni Pratama' },
-    { time: '15:00', title: 'Musik Sore Priangan', host: 'Siska Nuraini' }
-  ],
-  selasa: [
-    { time: '06:00', title: 'Semangat Pagi Warga', host: 'Rani Fitria' },
-    { time: '10:00', title: 'Forum Layanan Publik', host: 'Deni Pratama' },
-    { time: '19:00', title: 'Nada Sunda Malam', host: 'Siska Nuraini' }
-  ],
-  rabu: [
-    { time: '07:00', title: 'Info Pasar Sumedang', host: 'Rani Fitria' },
-    { time: '11:00', title: 'Dialog Pembangunan', host: 'Deni Pratama' },
-    { time: '20:00', title: 'Musik Nostalgia', host: 'Siska Nuraini' }
-  ],
-  kamis: [
-    { time: '06:00', title: 'Pagi Produktif', host: 'Rani Fitria' },
-    { time: '13:00', title: 'Pojok UMKM Sumedang', host: 'Deni Pratama' },
-    { time: '18:00', title: 'Siaran Aspirasi', host: 'Siska Nuraini' }
-  ],
-  jumat: [
-    { time: '06:00', title: 'Inspirasi Jumat', host: 'Rani Fitria' },
-    { time: '09:30', title: 'Khazanah Islam', host: 'Deni Pratama' },
-    { time: '16:00', title: 'Rileks Weekend', host: 'Siska Nuraini' }
-  ]
-};
 
 function setEqState(playing) {
   equalizers.forEach((eq) => eq.classList.toggle('paused', !playing));
@@ -69,14 +40,14 @@ function updateNowPlaying(data) {
   if (!first) return;
 
   const station = first.server_name || first.title || 'eRKS FM Sumedang';
-  const program = first.server_description || first.description || 'Inspirasi Sumedang';
+  const program = first.server_description || first.description || 'Belum ada informasi program';
 
   stationName.textContent = station;
   stickyStation.textContent = station;
   programTitle.textContent = program;
   stickyProgram.textContent = program;
 
-  announcerName.textContent = 'Penyiar: Tim eRKS FM';
+  announcerName.textContent = 'Penyiar: Belum tersedia';
   activeStreamUrl = first.listenurl || null;
 }
 
@@ -126,26 +97,13 @@ function togglePlayback() {
   startPlayback();
 }
 
-function renderSchedule(day) {
-  const list = scheduleData[day] || [];
-  scheduleList.innerHTML = list
-    .map((item) => `
-      <div class="time-item">
-        <strong>${item.time} - ${item.title}</strong>
-        <p>Penyiar: ${item.host}</p>
-      </div>
-    `)
-    .join('');
-}
-
-function bindScheduleTabs() {
-  scheduleTabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      scheduleTabs.forEach((item) => item.classList.remove('active'));
-      tab.classList.add('active');
-      renderSchedule(tab.dataset.day);
-    });
-  });
+function renderScheduleEmptyState() {
+  scheduleList.innerHTML = `
+    <div class="empty-state schedule-empty">
+      <h4>Jadwal belum tersedia</h4>
+      <p>Data hari dan jam siaran akan ditampilkan setelah jadwal resmi diinput.</p>
+    </div>
+  `;
 }
 
 function bindEvents() {
@@ -164,8 +122,7 @@ function bindEvents() {
 
 async function init() {
   bindEvents();
-  bindScheduleTabs();
-  renderSchedule('senin');
+  renderScheduleEmptyState();
   setEqState(false);
   audio.volume = Number(volumeControl.value);
 

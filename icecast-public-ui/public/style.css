@@ -153,6 +153,19 @@ input[type="range"] { accent-color: var(--cyan); width: 100%; }
 .program-card h4, .news-card h4, .profile-card h4, .media-card h4 { margin: 0 0 0.42rem; color: var(--navy); }
 .program-card p, .news-card p, .profile-card p, .media-card p { margin: 0.18rem 0; color: var(--muted); }
 
+.empty-state {
+  padding: 1rem;
+  background: linear-gradient(180deg, #fff, #f8fbff);
+}
+.empty-state h4 {
+  margin: 0 0 0.25rem;
+  color: var(--navy);
+}
+.empty-state p {
+  margin: 0;
+  color: var(--muted);
+}
+
 .onair { position: relative; }
 .onair-badge {
   position: absolute;
@@ -184,6 +197,7 @@ input[type="range"] { accent-color: var(--cyan); width: 100%; }
 .tab.active { background: var(--navy); color: #fff; border-color: var(--navy); }
 
 .timeline { padding: 1rem; display: grid; gap: 0.65rem; }
+.schedule-empty { border: 0; box-shadow: none; padding: 0; background: transparent; }
 .time-item {
   border-left: 3px solid #9ec5ef;
   padding: 0.2rem 0 0.2rem 0.65rem;

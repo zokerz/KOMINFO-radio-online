@@ -58,8 +58,8 @@
           <p class="label">Station</p>
           <h4 id="stationName">eRKS FM Sumedang</h4>
           <p class="freq">106.1 FM</p>
-          <p id="programTitle">Program Pagi Sumedang</p>
-          <p id="announcerName">Penyiar: Tim eRKS FM</p>
+          <p id="programTitle">Belum ada informasi program</p>
+          <p id="announcerName">Penyiar: Belum tersedia</p>
         </div>
         <div class="player-controls">
           <button id="cardPlay" class="btn-primary">Play</button>
@@ -77,23 +77,9 @@
       <div class="section-head">
         <h3>Program Hari Ini</h3>
       </div>
-      <div class="grid cards-3">
-        <article class="card program-card onair">
-          <span class="onair-badge">On Air</span>
-          <h4>Selamat Pagi Sumedang</h4>
-          <p>06:00 - 09:00</p>
-          <p>Penyiar: Rani Fitria</p>
-        </article>
-        <article class="card program-card">
-          <h4>Ruang Publik Daerah</h4>
-          <p>09:00 - 12:00</p>
-          <p>Penyiar: Deni Pratama</p>
-        </article>
-        <article class="card program-card">
-          <h4>Musik Sore Priangan</h4>
-          <p>15:00 - 18:00</p>
-          <p>Penyiar: Siska Nuraini</p>
-        </article>
+      <div class="card empty-state">
+        <h4>Belum ada data program</h4>
+        <p>Data program hari ini akan tampil setelah jadwal siaran resmi tersedia.</p>
       </div>
     </section>
 
@@ -102,13 +88,6 @@
         <h3>Jadwal Siaran Mingguan</h3>
       </div>
       <div class="card">
-        <div class="tabs" id="scheduleTabs">
-          <button class="tab active" data-day="senin">Senin</button>
-          <button class="tab" data-day="selasa">Selasa</button>
-          <button class="tab" data-day="rabu">Rabu</button>
-          <button class="tab" data-day="kamis">Kamis</button>
-          <button class="tab" data-day="jumat">Jumat</button>
-        </div>
         <div id="scheduleList" class="timeline"></div>
       </div>
     </section>
@@ -117,22 +96,9 @@
       <div class="section-head">
         <h3>Berita Terbaru</h3>
       </div>
-      <div class="grid cards-3">
-        <article class="card news-card">
-          <p class="meta">31 Mei 2026</p>
-          <h4>LPPL Sumedang Perkuat Informasi Kebencanaan</h4>
-          <p>eRKS FM memperluas slot informasi siaga bencana setiap jam.</p>
-        </article>
-        <article class="card news-card">
-          <p class="meta">29 Mei 2026</p>
-          <h4>Kolaborasi UMKM Lokal Hadir di Program Sore</h4>
-          <p>Pelaku usaha Sumedang kini mendapat panggung promosi rutin.</p>
-        </article>
-        <article class="card news-card">
-          <p class="meta">27 Mei 2026</p>
-          <h4>Pelatihan Penyiar Muda Dibuka untuk Pelajar</h4>
-          <p>Program edukatif untuk mencetak talenta penyiar lokal baru.</p>
-        </article>
+      <div class="card empty-state">
+        <h4>Belum ada berita</h4>
+        <p>Berita terbaru akan tampil setelah konten resmi tersedia.</p>
       </div>
     </section>
 
@@ -140,10 +106,9 @@
       <div class="section-head">
         <h3>Profil Penyiar</h3>
       </div>
-      <div class="grid cards-3">
-        <article class="card profile-card"><h4>Rani Fitria</h4><p>Host berita pagi dan inspirasi komunitas.</p></article>
-        <article class="card profile-card"><h4>Deni Pratama</h4><p>Pemandu dialog publik dan layanan masyarakat.</p></article>
-        <article class="card profile-card"><h4>Siska Nuraini</h4><p>Kurator musik lokal dan interaksi pendengar.</p></article>
+      <div class="card empty-state">
+        <h4>Belum ada profil penyiar</h4>
+        <p>Profil penyiar akan tampil setelah data resmi diinput.</p>
       </div>
     </section>
 
@@ -151,10 +116,9 @@
       <div class="section-head">
         <h3>Galeri & Video</h3>
       </div>
-      <div class="grid cards-3">
-        <article class="card media-card"><h4>Studio Siaran Utama</h4><p>Dokumentasi fasilitas studio eRKS FM.</p></article>
-        <article class="card media-card"><h4>Kegiatan Komunitas</h4><p>Interaksi penyiar dan warga Kabupaten Sumedang.</p></article>
-        <article class="card media-card"><h4>Video Highlight Mingguan</h4><p>Rekaman momen program unggulan pekan ini.</p></article>
+      <div class="card empty-state">
+        <h4>Belum ada galeri</h4>
+        <p>Foto dan video kegiatan akan tampil setelah media resmi tersedia.</p>
       </div>
     </section>
 
@@ -200,7 +164,7 @@
       <div>
         <p class="label">Now Playing</p>
         <h4 id="stickyStation">eRKS FM Sumedang</h4>
-        <p id="stickyProgram">Program Pagi Sumedang</p>
+        <p id="stickyProgram">Belum ada informasi program</p>
       </div>
     </div>
     <div class="equalizer paused" id="stickyEq" aria-hidden="true">
