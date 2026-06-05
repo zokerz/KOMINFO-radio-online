@@ -235,14 +235,35 @@ function passwordHash(password, salt) {
   return crypto.scryptSync(password, salt, 64).toString('hex');
 }
 
-function verifyPassword(password) {
-  if (CMS_ADMIN_PASSWORD_HASH) {
-    const [salt, hash] = CMS_ADMIN_PASSWORD_HASH.split(':');
+function makePasswordHash(password) {
+  const salt = crypto.randomBytes(16).toString('hex');
+  return `${salt}:${passwordHash(password, salt)}`;
+}
+
+function verifyPasswordWithHash(password, storedHash) {
+  if (storedHash) {
+    const [salt, hash] = storedHash.split(':');
     if (!salt || !hash) return false;
     const candidate = passwordHash(password, salt);
     if (candidate.length !== hash.length) return false;
     return crypto.timingSafeEqual(Buffer.from(candidate, 'hex'), Buffer.from(hash, 'hex'));
   }
+
+  return false;
+}
+
+function getAdminPasswordHash() {
+  try {
+    return getMeta('admin_password_hash');
+  } catch (e) {
+    return '';
+  }
+}
+
+function verifyPassword(password) {
+  const storedHash = getAdminPasswordHash();
+  if (storedHash) return verifyPasswordWithHash(password, storedHash);
+  if (CMS_ADMIN_PASSWORD_HASH) return verifyPasswordWithHash(password, CMS_ADMIN_PASSWORD_HASH);
 
   if (!CMS_ADMIN_PASSWORD) return false;
   const expected = crypto.createHash('sha256').update(CMS_ADMIN_PASSWORD).digest();
@@ -477,6 +498,17 @@ app.post('/api/admin/logout', requireSameOrigin, requireAdmin, (req, res) => {
 
 app.get('/api/admin/me', requireAdmin, (req, res) => {
   res.json({ username: req.admin.username });
+});
+
+app.post('/api/admin/password', requireSameOrigin, requireAdmin, (req, res) => {
+  const currentPassword = String(req.body?.currentPassword || '');
+  const newPassword = String(req.body?.newPassword || '');
+  if (!verifyPassword(currentPassword)) return res.status(401).json({ error: 'Password lama tidak valid' });
+  if (newPassword.length < 8) return res.status(400).json({ error: 'Password baru minimal 8 karakter' });
+  if (newPassword === currentPassword) return res.status(400).json({ error: 'Password baru harus berbeda' });
+
+  setMeta('admin_password_hash', makePasswordHash(newPassword));
+  res.json({ ok: true });
 });
 
 app.get('/api/admin/media', requireAdmin, (req, res) => {

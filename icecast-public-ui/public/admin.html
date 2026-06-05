@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/admin.css?v=20260605-logo1">
+  <link rel="stylesheet" href="/admin.css?v=20260605-password1">
 </head>
 <body>
   <main class="auth-shell" id="loginPanel">
@@ -213,12 +213,28 @@
             <label class="setting-row">CTA Website
               <input value="Dengarkan Sekarang" />
             </label>
+            <form id="passwordForm" class="setting-row password-form">
+              <h3>Ganti Password</h3>
+              <label>Password Lama
+                <input id="currentPassword" type="password" autocomplete="current-password" required />
+              </label>
+              <label>Password Baru
+                <input id="newPassword" type="password" autocomplete="new-password" minlength="8" required />
+              </label>
+              <label>Ulangi Password Baru
+                <input id="confirmPassword" type="password" autocomplete="new-password" minlength="8" required />
+              </label>
+              <div class="form-actions">
+                <button type="submit" class="primary-btn"><span class="material-symbols-outlined">lock_reset</span>Simpan Password</button>
+              </div>
+              <p id="passwordMessage" class="message"></p>
+            </form>
           </div>
         </section>
       </section>
     </div>
   </section>
 
-  <script src="/admin.js?v=20260605-logo1"></script>
+  <script src="/admin.js?v=20260605-password1"></script>
 </body>
 </html>

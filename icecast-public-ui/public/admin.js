@@ -24,6 +24,8 @@ const viewEyebrow = document.getElementById('viewEyebrow');
 const recentContent = document.getElementById('recentContent');
 const compactListToggle = document.getElementById('settingCompactList');
 const autoRefreshToggle = document.getElementById('settingAutoRefresh');
+const passwordForm = document.getElementById('passwordForm');
+const passwordMessage = document.getElementById('passwordMessage');
 
 let contentStore = {};
 let mediaStore = [];
@@ -758,6 +760,26 @@ compactListToggle.addEventListener('change', () => {
 autoRefreshToggle.addEventListener('change', () => {
   localStorage.setItem('cmsAutoRefresh', autoRefreshToggle.checked ? '1' : '0');
   scheduleRefresh();
+});
+passwordForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const currentPassword = document.getElementById('currentPassword').value;
+  const newPassword = document.getElementById('newPassword').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+
+  if (newPassword !== confirmPassword) {
+    showMessage(passwordMessage, 'Konfirmasi password baru tidak sama.', 'error');
+    return;
+  }
+
+  showMessage(passwordMessage, 'Menyimpan password...');
+  try {
+    await api('/api/admin/password', { method: 'POST', body: JSON.stringify({ currentPassword, newPassword }) });
+    passwordForm.reset();
+    showMessage(passwordMessage, 'Password berhasil diganti.', 'ok');
+  } catch (e) {
+    showMessage(passwordMessage, e.message, 'error');
+  }
 });
 
 compactListToggle.checked = localStorage.getItem('cmsCompactList') === '1';

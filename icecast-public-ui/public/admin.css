@@ -747,6 +747,19 @@ code {
   background: var(--surface-low);
 }
 
+.password-form {
+  display: grid;
+  gap: 12px;
+}
+
+.password-form h3 {
+  margin-bottom: 2px;
+}
+
+.password-form .message {
+  margin: 0;
+}
+
 body.compact-list .cms-card {
   grid-template-columns: 44px minmax(0, 1fr) auto;
   padding: 10px;
