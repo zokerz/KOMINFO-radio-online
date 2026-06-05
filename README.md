@@ -163,3 +163,7 @@ Dokumentasi detail koneksi Icecast ke web tersedia di [DOKUMENTASI_ALUR_ICECAST_
 - Jangan commit file `.env` atau credential sensitif.
 - Sesuaikan hostname dan public base URL jika deploy ke domain publik.
 - Monitor log Icecast dan public UI untuk memastikan stream stabil.
+
+
+user : admin 
+pass : kBYiG9HBstbIFYZ_bKHMaW7w

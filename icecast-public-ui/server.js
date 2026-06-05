@@ -18,11 +18,12 @@ const CMS_ADMIN_USER = process.env.CMS_ADMIN_USER || 'admin';
 const CMS_ADMIN_PASSWORD_HASH = process.env.CMS_ADMIN_PASSWORD_HASH || '';
 const CMS_ADMIN_PASSWORD = process.env.CMS_ADMIN_PASSWORD || '';
 const SESSION_TTL_MS = 1000 * 60 * 60 * 8;
+const MAX_IMAGE_DATA_BYTES = 100 * 1024;
 
 const app = express();
 app.set('trust proxy', 1);
 app.use(cors());
-app.use(express.json({ limit: '256kb' }));
+app.use(express.json({ limit: '512kb' }));
 app.use(express.static(path.join(__dirname, 'public'), {
   maxAge: 0,
   setHeaders: (res) => {
@@ -41,6 +42,12 @@ function sqlValue(value) {
 function runSql(sql) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
   return execFileSync('sqlite3', [DB_FILE, sql], { encoding: 'utf8' });
+}
+
+function runSqlJson(sql) {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+  const output = execFileSync('sqlite3', ['-json', DB_FILE, sql], { encoding: 'utf8' }).trim();
+  return output ? JSON.parse(output) : [];
 }
 
 function parseJsonRow(row) {
@@ -157,13 +164,10 @@ function readContentStore() {
   ensureDatabase();
   try {
     const store = { programs: [], schedules: [], news: [], announcers: [], galleries: [], updatedAt: getMeta('content_updated_at') || null };
-    const output = runSql("SELECT section || char(31) || payload FROM content_items ORDER BY updated_at DESC;").trim();
-    if (!output) return store;
-    output.split('\n').forEach((line) => {
-      const idx = line.indexOf('\x1f');
-      if (idx === -1) return;
-      const section = line.slice(0, idx);
-      const payload = parseJsonRow(line.slice(idx + 1));
+    const rows = runSqlJson('SELECT section, payload FROM content_items ORDER BY updated_at DESC;');
+    rows.forEach((row) => {
+      const section = row.section;
+      const payload = parseJsonRow(row.payload);
       if (payload && Array.isArray(store[section])) store[section].push(payload);
     });
     return store;
@@ -303,6 +307,18 @@ function cleanText(value, max = 500) {
   return String(value || '').trim().slice(0, max);
 }
 
+function cleanImageData(value) {
+  const text = String(value || '').trim();
+  if (!text) return '';
+  if (!/^data:image\/(jpeg|jpg|png|webp);base64,[a-z0-9+/=]+$/i.test(text)) return text.slice(0, 140000);
+  return text.slice(0, 140000);
+}
+
+function imageDataBytes(value) {
+  const base64 = String(value || '').split(',')[1] || '';
+  return Math.ceil((base64.length * 3) / 4);
+}
+
 function sanitizeContentItem(section, input, existing = {}) {
   const now = new Date().toISOString();
   const base = {
@@ -349,7 +365,7 @@ function sanitizeContentItem(section, input, existing = {}) {
       name: cleanText(input.name, 120),
       role: cleanText(input.role, 120),
       bio: cleanText(input.bio, 500),
-      imageUrl: cleanText(input.imageUrl, 500)
+      imageUrl: cleanImageData(input.imageUrl)
     };
   }
 
@@ -358,7 +374,7 @@ function sanitizeContentItem(section, input, existing = {}) {
       ...base,
       title: cleanText(input.title, 120),
       type: ['image', 'video'].includes(input.type) ? input.type : 'image',
-      mediaUrl: cleanText(input.mediaUrl, 500),
+      mediaUrl: input.type === 'video' ? cleanText(input.mediaUrl, 500) : cleanImageData(input.mediaUrl),
       description: cleanText(input.description, 500)
     };
   }
@@ -369,8 +385,11 @@ function sanitizeContentItem(section, input, existing = {}) {
 function validateContentItem(section, item) {
   const main = section === 'announcers' ? item.name : item.title;
   if (!main) throw new Error('Judul/nama wajib diisi');
-  if (section === 'galleries' && item.mediaUrl && !/^https?:\/\//i.test(item.mediaUrl)) throw new Error('URL media wajib berupa http/https');
-  if (section === 'announcers' && item.imageUrl && !/^https?:\/\//i.test(item.imageUrl)) throw new Error('URL foto wajib berupa http/https');
+  if (section === 'galleries' && item.type === 'video' && item.mediaUrl && !/^https?:\/\//i.test(item.mediaUrl)) throw new Error('URL media wajib berupa http/https');
+  if (section === 'galleries' && item.type !== 'video' && item.mediaUrl && !/^data:image\/(jpeg|jpg|png|webp);base64,/i.test(item.mediaUrl)) throw new Error('Foto wajib diunggah dari file gambar');
+  if (section === 'announcers' && item.imageUrl && !/^data:image\/(jpeg|jpg|png|webp);base64,/i.test(item.imageUrl)) throw new Error('Foto wajib diunggah dari file gambar');
+  if (section === 'galleries' && item.type !== 'video' && item.mediaUrl && imageDataBytes(item.mediaUrl) > MAX_IMAGE_DATA_BYTES) throw new Error('Ukuran foto hasil kompresi maksimal 100 KB');
+  if (section === 'announcers' && item.imageUrl && imageDataBytes(item.imageUrl) > MAX_IMAGE_DATA_BYTES) throw new Error('Ukuran foto hasil kompresi maksimal 100 KB');
   if (section === 'news' && item.url && !/^https?:\/\//i.test(item.url)) throw new Error('URL berita wajib berupa http/https');
 }
 

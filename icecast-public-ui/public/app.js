@@ -226,6 +226,7 @@ function renderSiteContent(data) {
   setEmptyState(announcerList, announcerEmpty, announcers.length > 0);
   announcerList.innerHTML = announcers.map((item) => `
     <article class="site-card">
+      ${item.imageUrl ? `<img class="site-card-media portrait" src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.name || 'Penyiar')}">` : ''}
       <p class="meta">${escapeHtml(item.role || 'Penyiar')}</p>
       <h3>${escapeHtml(item.name)}</h3>
       <p>${escapeHtml(item.bio)}</p>
@@ -236,10 +237,11 @@ function renderSiteContent(data) {
   setEmptyState(galleryList, galleryEmpty, galleries.length > 0);
   galleryList.innerHTML = galleries.map((item) => `
     <article class="site-card">
+      ${item.type !== 'video' && item.mediaUrl ? `<img class="site-card-media" src="${escapeHtml(item.mediaUrl)}" alt="${escapeHtml(item.title || 'Foto galeri')}">` : ''}
       <p class="meta">${escapeHtml(item.type === 'video' ? 'Video' : 'Foto')}</p>
       <h3>${escapeHtml(item.title)}</h3>
       <p>${escapeHtml(item.description)}</p>
-      ${item.mediaUrl ? `<a href="${escapeHtml(item.mediaUrl)}" target="_blank" rel="noopener">Lihat media</a>` : ''}
+      ${item.type === 'video' && item.mediaUrl ? `<a href="${escapeHtml(item.mediaUrl)}" target="_blank" rel="noopener">Lihat media</a>` : ''}
     </article>
   `).join('');
 }

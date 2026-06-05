@@ -6,180 +6,219 @@
   <title>CMS eRKS FM Sumedang</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/admin.css?v=20260603-cms1">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin.css?v=20260605-logo1">
 </head>
 <body>
-  <main class="shell">
-    <section class="hero">
+  <main class="auth-shell" id="loginPanel">
+    <section class="auth-card">
+      <img class="auth-logo" src="/logo-erks.webp" alt="eRKS FM Sumedang" width="224" height="90" />
       <p class="eyebrow">CMS eRKS FM Sumedang</p>
-      <h1>Automation Media</h1>
-      <p>Kelola daftar media yang bisa dibaca sistem automation melalui endpoint publik.</p>
-    </section>
-
-    <section id="loginPanel" class="panel auth-panel">
-      <h2>Login Admin</h2>
-      <form id="loginForm">
+      <h1>Panel Kontrol</h1>
+      <p class="muted">Kelola siaran, berita, program, dan konten website eRKS FM dari satu tempat.</p>
+      <form id="loginForm" class="stack-form auth-form">
         <label>Username
           <input id="username" name="username" autocomplete="username" required />
         </label>
         <label>Password
           <input id="password" name="password" type="password" autocomplete="current-password" required />
         </label>
-        <button type="submit">Masuk</button>
+        <button type="submit" class="primary-btn">
+          <span class="material-symbols-outlined">login</span>
+          Masuk
+        </button>
       </form>
       <p id="loginMessage" class="message"></p>
     </section>
-
-    <section id="cmsPanel" class="cms hidden">
-      <div class="toolbar panel">
-        <div>
-          <p class="eyebrow">Signed in</p>
-          <h2 id="adminName">Admin</h2>
-        </div>
-        <div class="toolbar-actions">
-          <a href="/" class="link-btn">Lihat Web</a>
-          <button id="logoutBtn" type="button" class="ghost-btn">Logout</button>
-        </div>
-      </div>
-
-      <section class="panel">
-        <h2 id="formTitle">Tambah Media</h2>
-        <form id="mediaForm" class="media-form">
-          <input id="mediaId" type="hidden" />
-          <label>Judul Media
-            <input id="mediaTitle" maxlength="120" placeholder="Contoh: Jingle eRKS FM" required />
-          </label>
-          <label>URL Media
-            <input id="mediaUrl" type="url" placeholder="https://domain/media/audio.mp3" required />
-          </label>
-          <label>Tipe
-            <select id="mediaType">
-              <option value="audio">Audio</option>
-              <option value="video">Video</option>
-              <option value="stream">Stream</option>
-            </select>
-          </label>
-          <label>Metode Play
-            <select id="mediaPlaybackMode">
-              <option value="queue">Queue / Antrean</option>
-              <option value="schedule">Berdasarkan Jam</option>
-              <option value="priority">Prioritas</option>
-              <option value="loop">Loop</option>
-            </select>
-          </label>
-          <label>Urutan Queue
-            <input id="mediaQueueOrder" type="number" min="0" step="1" value="0" />
-          </label>
-          <label>Prioritas
-            <input id="mediaPriority" type="number" step="1" value="0" />
-          </label>
-          <label>Mulai Aktif
-            <input id="mediaStart" type="datetime-local" />
-          </label>
-          <label>Selesai Aktif
-            <input id="mediaEnd" type="datetime-local" />
-          </label>
-          <label>Jam Mulai Harian
-            <input id="mediaTimeStart" type="time" />
-          </label>
-          <label>Jam Selesai Harian
-            <input id="mediaTimeEnd" type="time" />
-          </label>
-          <fieldset class="wide days-field">
-            <legend>Hari Aktif</legend>
-            <label><input type="checkbox" name="mediaDays" value="1" /> Senin</label>
-            <label><input type="checkbox" name="mediaDays" value="2" /> Selasa</label>
-            <label><input type="checkbox" name="mediaDays" value="3" /> Rabu</label>
-            <label><input type="checkbox" name="mediaDays" value="4" /> Kamis</label>
-            <label><input type="checkbox" name="mediaDays" value="5" /> Jumat</label>
-            <label><input type="checkbox" name="mediaDays" value="6" /> Sabtu</label>
-            <label><input type="checkbox" name="mediaDays" value="0" /> Minggu</label>
-          </fieldset>
-          <label class="check-row">
-            <input id="mediaEnabled" type="checkbox" />
-            Aktifkan media ini
-          </label>
-          <label class="wide">Catatan
-            <textarea id="mediaNotes" rows="3" maxlength="500" placeholder="Catatan internal"></textarea>
-          </label>
-          <div class="form-actions wide">
-            <button type="submit">Simpan Media</button>
-            <button id="resetFormBtn" type="button" class="ghost-btn">Reset</button>
-          </div>
-        </form>
-        <p id="formMessage" class="message"></p>
-      </section>
-
-      <section class="panel">
-        <div class="list-head">
-          <div>
-            <p class="eyebrow">Automation API</p>
-            <h2>Daftar Media</h2>
-          </div>
-          <code>/api/automation-media</code>
-        </div>
-        <div id="mediaList" class="media-list"></div>
-      </section>
-
-      <section class="panel">
-        <div class="list-head">
-          <div>
-            <p class="eyebrow">Konten Website</p>
-            <h2>Isi Field Kosong</h2>
-          </div>
-          <code>/api/site-content</code>
-        </div>
-        <div class="tabs">
-          <button type="button" class="tab active" data-section="programs">Program</button>
-          <button type="button" class="tab" data-section="schedules">Jadwal</button>
-          <button type="button" class="tab" data-section="news">Berita</button>
-          <button type="button" class="tab" data-section="announcers">Penyiar</button>
-          <button type="button" class="tab" data-section="galleries">Galeri</button>
-        </div>
-        <form id="contentForm" class="media-form">
-          <input id="contentId" type="hidden" />
-          <input id="contentSection" type="hidden" value="programs" />
-          <label id="fieldTitle">Judul
-            <input id="contentTitle" maxlength="140" required />
-          </label>
-          <label id="fieldSecondary">Waktu
-            <input id="contentSecondary" maxlength="120" />
-          </label>
-          <label id="fieldTertiary">Penyiar / Role
-            <input id="contentTertiary" maxlength="120" />
-          </label>
-          <label id="fieldUrl">URL
-            <input id="contentUrl" type="url" maxlength="500" />
-          </label>
-          <label id="fieldType">Tipe Media
-            <select id="contentType">
-              <option value="image">Foto</option>
-              <option value="video">Video</option>
-            </select>
-          </label>
-          <label class="check-row">
-            <input id="contentOnAir" type="checkbox" />
-            Tandai On Air
-          </label>
-          <label class="check-row">
-            <input id="contentEnabled" type="checkbox" checked />
-            Tampilkan di website
-          </label>
-          <label id="fieldBody" class="wide">Deskripsi
-            <textarea id="contentBody" rows="3" maxlength="500"></textarea>
-          </label>
-          <div class="form-actions wide">
-            <button type="submit">Simpan Konten</button>
-            <button id="resetContentBtn" type="button" class="ghost-btn">Reset</button>
-          </div>
-        </form>
-        <p id="contentMessage" class="message"></p>
-        <div id="contentList" class="media-list"></div>
-      </section>
-    </section>
   </main>
 
-  <script src="/admin.js?v=20260603-cms1"></script>
+  <section id="cmsPanel" class="app-shell hidden">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <img class="sidebar-logo" src="/logo-erks.webp" alt="eRKS FM" width="112" height="45" />
+        <div>
+          <strong>eRKS FM</strong>
+          <span>CMS Sumedang</span>
+        </div>
+      </div>
+      <nav class="side-nav" aria-label="Navigasi CMS">
+        <button type="button" class="nav-btn active" data-view="dashboard"><span class="material-symbols-outlined">space_dashboard</span>Dashboard</button>
+        <button type="button" class="nav-btn" data-view="news"><span class="material-symbols-outlined">newspaper</span>Berita</button>
+        <button type="button" class="nav-btn" data-view="programs"><span class="material-symbols-outlined">playlist_play</span>Program</button>
+        <button type="button" class="nav-btn" data-view="schedules"><span class="material-symbols-outlined">calendar_month</span>Jadwal</button>
+        <button type="button" class="nav-btn" data-view="announcers"><span class="material-symbols-outlined">groups</span>Penyiar</button>
+        <button type="button" class="nav-btn" data-view="galleries"><span class="material-symbols-outlined">photo_library</span>Galeri</button>
+        <button type="button" class="nav-btn" data-view="settings"><span class="material-symbols-outlined">tune</span>Settings</button>
+      </nav>
+      <div class="sidebar-footer">
+        <span class="live-dot"></span>
+        <span>Siaran live</span>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="viewEyebrow">Dashboard</p>
+          <h1 id="viewTitle">Halo Admin, Selamat Datang</h1>
+        </div>
+        <div class="topbar-actions">
+          <button id="logoutBtn" type="button" class="icon-btn" aria-label="Logout">
+            <span class="material-symbols-outlined">logout</span>
+          </button>
+          <div class="admin-chip">
+            <span class="material-symbols-outlined">person</span>
+            <strong id="adminName">Admin</strong>
+          </div>
+        </div>
+      </header>
+
+      <section class="view active" data-view-panel="dashboard">
+        <div class="welcome-panel">
+          <div>
+            <p class="eyebrow">Panel Kontrol eRKS FM</p>
+            <h2>Kelola konten radio publik dengan alur yang lebih cepat.</h2>
+            <p>Dashboard ini menggabungkan konten website, jadwal siaran, profil penyiar, berita, dan galeri.</p>
+          </div>
+          <span class="material-symbols-outlined hero-icon">radio</span>
+        </div>
+
+        <div class="stats-grid" id="statsGrid">
+          <article class="stat-card"><span class="material-symbols-outlined">playlist_play</span><p>Total Program</p><strong data-stat="programs">0</strong></article>
+          <article class="stat-card"><span class="material-symbols-outlined">newspaper</span><p>Total Berita</p><strong data-stat="news">0</strong></article>
+          <article class="stat-card"><span class="material-symbols-outlined">groups</span><p>Penyiar</p><strong data-stat="announcers">0</strong></article>
+          <article class="stat-card live"><span class="material-symbols-outlined">sensors</span><p>Status Siaran</p><strong>LIVE</strong></article>
+        </div>
+
+        <div class="dashboard-grid">
+          <section class="panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Aktivitas Terakhir</p>
+                <h2>Konten Terbaru</h2>
+              </div>
+              <button type="button" class="ghost-btn compact" data-jump="news"><span class="material-symbols-outlined">add</span>Berita</button>
+            </div>
+            <div id="recentContent" class="activity-list"></div>
+          </section>
+
+          <section class="panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Quick Actions</p>
+                <h2>Aksi Cepat</h2>
+              </div>
+            </div>
+            <div class="quick-actions">
+              <button type="button" class="action-row" data-jump="news"><span class="material-symbols-outlined">add_circle</span>Tambah Berita<span class="material-symbols-outlined">chevron_right</span></button>
+              <button type="button" class="action-row" data-jump="programs"><span class="material-symbols-outlined">edit_calendar</span>Update Program<span class="material-symbols-outlined">chevron_right</span></button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" data-view-panel="news">
+        <section class="panel editor-panel">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Konten Website</p>
+              <h2>Kelola Berita</h2>
+            </div>
+            <div class="search-box">
+              <span class="material-symbols-outlined">search</span>
+              <input id="contentSearch" placeholder="Cari konten..." />
+            </div>
+          </div>
+          <div class="chips">
+            <button type="button" class="chip active" data-filter="all">Semua</button>
+            <button type="button" class="chip" data-filter="enabled">Tampil</button>
+            <button type="button" class="chip" data-filter="hidden">Hidden</button>
+          </div>
+          <form id="contentForm" class="content-form">
+            <input id="contentId" type="hidden" />
+            <input id="contentSection" type="hidden" value="news" />
+            <label id="fieldTitle">Judul Berita
+              <input id="contentTitle" maxlength="140" required />
+            </label>
+            <label id="fieldSecondary">Tanggal
+              <input id="contentSecondary" maxlength="120" />
+              <select id="contentSecondarySelect" hidden>
+                <option value="Senin">Senin</option>
+                <option value="Selasa">Selasa</option>
+                <option value="Rabu">Rabu</option>
+                <option value="Kamis">Kamis</option>
+                <option value="Jumat">Jumat</option>
+                <option value="Sabtu">Sabtu</option>
+                <option value="Minggu">Minggu</option>
+              </select>
+            </label>
+            <label id="fieldTertiary">Ringkasan Pendek
+              <input id="contentTertiary" maxlength="120" />
+            </label>
+            <label id="fieldPhoto" class="photo-field wide" hidden>Upload Foto
+              <input id="contentPhoto" type="file" accept="image/jpeg,image/png,image/webp" />
+              <input id="contentPhotoData" type="hidden" />
+              <span class="field-hint">Maksimal 5 MB. Foto otomatis dikompres sampai 100 KB sebelum disimpan.</span>
+              <img id="contentPhotoPreview" class="photo-preview" alt="" hidden />
+            </label>
+            <label id="fieldUrl">URL
+              <input id="contentUrl" type="url" maxlength="500" />
+            </label>
+            <label id="fieldType">Tipe Media
+              <select id="contentType">
+                <option value="image">Foto</option>
+                <option value="video">Video</option>
+              </select>
+            </label>
+            <label class="toggle-row">
+              <input id="contentOnAir" type="checkbox" />
+              <span>On Air</span>
+            </label>
+            <label class="toggle-row">
+              <input id="contentEnabled" type="checkbox" checked />
+              <span>Tampilkan di website</span>
+            </label>
+            <label id="fieldBody" class="wide">Excerpt
+              <textarea id="contentBody" rows="4" maxlength="500"></textarea>
+            </label>
+            <div class="form-actions wide">
+              <button type="submit" class="primary-btn"><span class="material-symbols-outlined">save</span>Simpan Konten</button>
+              <button id="resetContentBtn" type="button" class="ghost-btn"><span class="material-symbols-outlined">restart_alt</span>Reset</button>
+            </div>
+          </form>
+          <p id="contentMessage" class="message"></p>
+          <div id="contentList" class="cms-list"></div>
+        </section>
+      </section>
+
+      <section class="view" data-view-panel="programs"></section>
+      <section class="view" data-view-panel="schedules"></section>
+      <section class="view" data-view-panel="announcers"></section>
+      <section class="view" data-view-panel="galleries"></section>
+
+      <section class="view" data-view-panel="settings">
+        <section class="panel settings-grid">
+          <div>
+            <p class="eyebrow">CMS Settings</p>
+            <h2>Pengaturan Publikasi</h2>
+            <p class="muted">Preferensi tampilan ini disimpan di browser admin untuk membantu workflow harian.</p>
+          </div>
+          <div class="setting-list">
+            <label class="toggle-row setting-row"><input id="settingAutoRefresh" type="checkbox" checked /><span>Auto refresh data dashboard</span></label>
+            <label class="toggle-row setting-row"><input id="settingCompactList" type="checkbox" /><span>Mode daftar ringkas</span></label>
+            <label class="setting-row">Nama Stasiun
+              <input value="eRKS FM Sumedang" />
+            </label>
+            <label class="setting-row">CTA Website
+              <input value="Dengarkan Sekarang" />
+            </label>
+          </div>
+        </section>
+      </section>
+    </div>
+  </section>
+
+  <script src="/admin.js?v=20260605-logo1"></script>
 </body>
 </html>

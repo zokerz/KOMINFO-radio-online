@@ -15,6 +15,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
@@ -67,7 +68,18 @@ button:focus-visible, a:focus-visible, input:focus-visible {
   font-weight: 800;
 }
 
-.brand-icon, .footer-brand span { color: var(--secondary); }
+.brand-logo {
+  width: clamp(7.5rem, 13vw, 9.3rem);
+  height: auto;
+  display: block;
+}
+
+.footer-logo {
+  width: min(100%, 12rem);
+  height: auto;
+  display: block;
+}
+
 .menu { display: flex; align-items: center; gap: 1.1rem; }
 .menu a, .footer a {
   color: var(--muted);
@@ -75,6 +87,34 @@ button:focus-visible, a:focus-visible, input:focus-visible {
   font-weight: 600;
 }
 .menu a:hover, .footer a:hover { color: var(--secondary); }
+
+.topbar-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.admin-login {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: var(--secondary);
+  text-decoration: none;
+  border: 1px solid rgba(0, 104, 122, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 12px 26px rgba(3, 26, 52, 0.08);
+  transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-login:hover {
+  color: var(--primary);
+  border-color: rgba(0, 188, 212, 0.42);
+  box-shadow: 0 16px 32px rgba(0, 104, 122, 0.14);
+  transform: translateY(-2px);
+}
 
 .listen-now, .primary-action, .secondary-action {
   display: inline-flex;
@@ -341,6 +381,18 @@ input[type="range"] { width: 100%; accent-color: var(--secondary); }
   background: var(--surface);
   box-shadow: 0 8px 26px rgba(25, 28, 30, 0.05);
 }
+.site-card-media {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 0.9rem;
+  border-radius: 0.75rem;
+  background: var(--surface-low);
+}
+.site-card-media.portrait {
+  aspect-ratio: 1 / 1;
+}
 .site-card h3 {
   margin: 0.2rem 0 0.4rem;
   font-family: "Plus Jakarta Sans", Inter, sans-serif;
@@ -531,7 +583,9 @@ input[type="range"] { width: 100%; accent-color: var(--secondary); }
   body { padding-bottom: 9rem; }
   .topbar { height: auto; min-height: 4rem; padding-block: 0.65rem; }
   .brand { min-width: 0; }
-  .brand span:last-child { max-width: 48vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .brand-logo { width: clamp(7rem, 30vw, 8.8rem); }
+  .topbar-actions { gap: 0.45rem; }
+  .admin-login { width: 2.4rem; height: 2.4rem; }
   .listen-now { padding-inline: 0.85rem; font-size: 0.86rem; }
   .listen-now .material-symbols-outlined { display: none; }
   .hero { padding-top: 7.3rem; text-align: left; }

@@ -8,13 +8,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css?v=20260603-ui2">
+  <link rel="stylesheet" href="/style.css?v=20260605-logo1">
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="#home" aria-label="eRKS FM Sumedang">
-      <span class="material-symbols-outlined brand-icon" aria-hidden="true">radio</span>
-      <span>eRKS FM Sumedang</span>
+      <img class="brand-logo" src="/logo-erks.webp" alt="eRKS FM Sumedang" width="149" height="60" />
     </a>
     <nav class="menu" aria-label="Navigasi utama">
       <a href="#home">Beranda</a>
@@ -23,10 +22,15 @@
       <a href="#news">Berita</a>
       <a href="#about">Tentang</a>
     </nav>
-    <a class="listen-now" href="#live-player">
-      <span class="material-symbols-outlined" aria-hidden="true">play_circle</span>
-      Dengarkan Sekarang
-    </a>
+    <div class="topbar-actions">
+      <a class="admin-login" href="/admin" aria-label="Login admin CMS" title="Login admin CMS">
+        <span class="material-symbols-outlined" aria-hidden="true">login</span>
+      </a>
+      <a class="listen-now" href="#live-player">
+        <span class="material-symbols-outlined" aria-hidden="true">play_circle</span>
+        Dengarkan Sekarang
+      </a>
+    </div>
   </header>
 
   <main>
@@ -164,8 +168,7 @@
     <div class="container footer-grid">
       <div>
         <div class="footer-brand">
-          <span class="material-symbols-outlined" aria-hidden="true">radio</span>
-          <strong>eRKS FM Sumedang</strong>
+          <img class="footer-logo" src="/logo-erks.webp" alt="eRKS FM Sumedang" width="149" height="60" />
         </div>
         <p>Jl. Pangeran Kornel No.2, Kelurahan Regol Wetan, Kec. Sumedang Selatan, Kab. Sumedang.</p>
       </div>
@@ -204,6 +207,6 @@
   <audio id="radioAudio" preload="none"></audio>
 
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <script src="/app.js?v=20260603-ui2"></script>
+  <script src="/app.js?v=20260605-logo1"></script>
 </body>
 </html>
